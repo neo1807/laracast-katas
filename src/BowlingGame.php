@@ -2,7 +2,7 @@
 
 namespace App;
 
-class Game
+class BowlingGame
 {
     const FRAMES_PER_GAME = 10;
     protected array $rolls = [];
