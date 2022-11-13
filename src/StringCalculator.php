@@ -8,20 +8,16 @@ class StringCalculator
 {
     const MAX_NUMBER_ALLOWED = 1000;
 
-    public function __construct()
-    {
-    }
-
     /**
      * @throws Exception
      */
     public function add(string $numbers)
     {
-        $numbers = $this->parseNumbers($numbers);
+        $numbersArray = $this->parseNumbers($numbers);
 
-        $this->negativeNumbersNotAllowed($numbers);
+        $this->negativeNumbersNotAllowed($numbersArray);
 
-        return array_sum($this->ignoreGreaterThanMax($numbers));
+        return array_sum($this->ignoreGreaterThanMax($numbersArray));
     }
 
     /**
@@ -32,7 +28,7 @@ class StringCalculator
     public function negativeNumbersNotAllowed($numbers): void
     {
         foreach ($numbers as $number) {
-            if ($number < 0) {
+            if ((int)($number) < 0) {
                 throw new Exception('Negative numbers not allowed.');
             }
         }
