@@ -6,51 +6,59 @@ use PHPUnit\Framework\TestCase;
 
 class StringCalculatorTest extends TestCase
 {
-    public function test_evaluates_empty_string_as_zero()
+    protected StringCalculator $calculator;
+
+    protected function setUp(): void
     {
-        $calculator = new StringCalculator();
-        $this->assertSame(0, $calculator->add(''));
+        $this->calculator = new StringCalculator();
     }
 
-    public function test_finds_the_sum_of_a_single_number()
+    /** @test */
+    public function it_evaluates_empty_string_as_zero()
     {
-        $calculator = new StringCalculator();
-        $this->assertSame(5, $calculator->add('5'));
+        $this->assertSame(0, $this->calculator->add(''));
     }
 
-    public function test_finds_the_sum_of_two_numbers()
+    /** @test */
+    public function it_finds_the_sum_of_a_single_number()
     {
-        $calculator = new StringCalculator();
-        $this->assertSame(10, $calculator->add('5,5'));
+        $this->assertSame(5, $this->calculator->add('5'));
     }
 
-    public function test_finds_the_sum_of_any_amount_of_numbers()
+    /** @test */
+    public function it_finds_the_sum_of_two_numbers()
     {
-        $calculator = new StringCalculator();
-        $this->assertSame(20, $calculator->add('5,5,5,5'));
+        $this->assertSame(10, $this->calculator->add('5,5'));
     }
 
-    public function test_accepts_new_line_delimiter()
+    /** @test */
+    public function it_finds_the_sum_of_any_amount_of_numbers()
     {
-        $calculator = new StringCalculator();
-        $this->assertSame(10, $calculator->add("5\n5"));
+        $this->assertSame(20, $this->calculator->add('5,5,5,5'));
     }
 
-    public function test_negative_numbers_not_allowed()
+    /** @test */
+    public function it_accepts_new_line_delimiter()
     {
-        $calculator = new StringCalculator();
+        $this->assertSame(10, $this->calculator->add("5\n5"));
+    }
+
+    /** @test */
+    public function it_does_not_allow_negative_numbers()
+    {
         $this->expectException(\Exception::class);
-        $calculator->add('5,-4');
+        $this->calculator->add('5,-4');
     }
 
-    public function test_numbers_greater_than_1000_are_ignored()
+    /** @test */
+    public function it_ignores_numbers_greater_than_1000()
     {
-        $calculator = new StringCalculator();
-        $this->assertSame(10, $calculator->add("10,1111"));
+        $this->assertSame(10, $this->calculator->add("10,1111"));
     }
-    public function test_supports_custom_delimiters()
+
+    /** @test */
+    public function it_supports_custom_delimiters()
     {
-        $calculator = new StringCalculator();
-        $this->assertSame(10, $calculator->add("//:\n5:5"));
+        $this->assertSame(10, $this->calculator->add("//:\n5:5"));
     }
 }
