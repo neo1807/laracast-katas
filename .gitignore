@@ -1,4 +1,5 @@
 /.idea
 /.ddev
+/.fleet
 /vendor
 .phpunit.result.cache
